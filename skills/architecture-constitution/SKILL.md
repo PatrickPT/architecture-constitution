@@ -48,8 +48,8 @@ The result is one PR in the project: the constitution, the checks that enforce i
    for a `full` project, stop, it needs [spec-kit](https://github.com/github/spec-kit)'s `specify init` first; for a `lean`
    one, write `.specify/memory/constitution.md` directly in step 4, and say in the PR that only CI and review
    then enforce it.
-2. **Pick the profile** by the base's criteria and say why. If it's unclear, ask; unattended, take `full` and
-   record it as an assumption.
+2. **Pick the profile** by the base's criteria and say why. If it's unclear, ask; with nobody to ask, take `full`
+   and record it as an assumption.
 3. **Draft the articles.** Keep, adapt or drop each base article of the profile, with a reason.
    - Make every rule concrete: real paths and tools, not principle names. Not "dependencies point inward" but
      "`src/domain/` imports nothing from `src/adapters/`, `fastapi` or `sqlalchemy`".

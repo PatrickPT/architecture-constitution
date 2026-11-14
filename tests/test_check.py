@@ -67,6 +67,53 @@ class CheckTest(unittest.TestCase):
     def test_skill_name(self):
         self.assertFails("name must be", SKILL + "SKILL.md", "name: architecture-constitution", "name: arch")
 
+    def test_description_too_long(self):
+        self.assertFails("longer than 1024", SKILL + "SKILL.md", 'its CI checks."', "x" * 1024 + '"')
+
+    def test_wrapped_count(self):
+        self.assertFails("'16 articles', but there are 15", "README.md", "15\n  articles", "16\n  articles")
+
+    def test_themes_count(self):
+        self.assertFails("'13 themes', but there are 12", CATALOG, "in 12 themes", "in 13 themes")
+
+    def test_duplicate_principle(self):
+        self.assertFails("principle 1 is defined twice", CATALOG, "| 2 | **High Cohesion", "| 1 | **High Cohesion")
+
+    def test_theme_missing_from_index(self):
+        self.assertFails(
+            "theme 'Socio-technical' is missing from the index",
+            CATALOG,
+            "| [Socio-technical](#socio-technical) | 50–54 |\n",
+            "",
+        )
+
+    def test_empty_cell(self):
+        self.assertFails("principle 1 needs", CATALOG, "| #27: don't pre-split a small script |", "|  |")
+
+    def test_lean_after_full(self):
+        self.assertFails("article X is out of order", BASE, "### X. Contexts own their data (full;", "### X. Contexts own their data (lean;")
+
+    def test_profile_line(self):
+        self.assertFails("lean profile line must name Articles I–VIII", BASE, "Articles I–VIII.", "Articles I–VII.")
+
+    def test_lean_range_elsewhere(self):
+        self.assertFails("'Articles I–IX' is neither", "README.md", "(Articles I–VIII)", "(Articles I–IX)")
+
+    def test_article_without_check(self):
+        self.assertFails("'### I. Precedence (lean)' has no Check", BASE, "- **Check:** Plan: the Constitution Check,", "Plan:")
+
+    def test_link_with_title(self):
+        self.assertFails("link to missing nowhere.md", "README.md", "## License", '[x](nowhere.md "t")\n\n## License')
+
+    def test_links_in_code_fences_are_text(self):
+        code, out = self.run_check("README.md", "## License", "```text\n[x](nowhere.md)\n```\n\n## License")
+        self.assertEqual(code, 0, out)
+
+    def test_repeated_heading_anchor(self):
+        edit = ("README.md", "## License", "[x](#license-1)\n\n## License\n\n## License")
+        code, out = self.run_check(*edit)
+        self.assertEqual(code, 0, out)
+
 
 if __name__ == "__main__":
     unittest.main()

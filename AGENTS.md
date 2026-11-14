@@ -10,7 +10,7 @@ Run them before you hand over; CI runs the same.
 
 ```sh
 make check         # everything below
-make consistency   # scripts/check.py: references, theme ranges, article order, counts, links, front matter
+make consistency   # scripts/check.py: references, ranges, complete rows, article order, counts, links
 make test          # python3 -m unittest: the check catches each kind of drift
 ```
 

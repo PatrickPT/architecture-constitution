@@ -7,8 +7,8 @@ gives a project a constitution for those rules, but it starts from a blank page,
 starts from a tested base, makes each rule concrete for your repository (real paths, real tools), and adds the
 check that enforces it to CI. Then it reviews plans and diffs against the result.
 
-It is one skill in the open Agent Skills format (`SKILL.md`), for any harness that reads it, with or without
-spec-kit.
+It is one skill in the open Agent Skills format (`SKILL.md`), for any harness that reads it. The `lean` profile
+works without spec-kit; `full` expects a repository set up with it.
 
 ## What's inside
 
